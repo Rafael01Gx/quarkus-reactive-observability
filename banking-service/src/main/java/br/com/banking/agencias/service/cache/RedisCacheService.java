@@ -16,15 +16,28 @@ public class RedisCacheService {
     }
 
     public Uni<Void> set(String key, String value, int ttlSeconds) {
-        return redisClient.send(Request.cmd(Command.SETEX).arg(key).arg(ttlSeconds).arg(value)).replaceWithVoid();
+        return redisClient
+                .send(Request
+                        .cmd(Command.SETEX)
+                        .arg(key)
+                        .arg(ttlSeconds)
+                        .arg(value))
+                .replaceWithVoid();
     }
 
     public Uni<String> get(String key) {
-        return redisClient.send(Request.cmd(Command.GET).arg(key))
+        return redisClient
+                .send(Request
+                        .cmd(Command.GET)
+                        .arg(key))
                 .map(result -> result == null ? null : result.toString());
     }
 
     public Uni<Void> del(String key) {
-        return redisClient.send(Request.cmd(Command.DEL).arg(key)).replaceWithVoid();
+        return redisClient
+                .send(Request
+                        .cmd(Command.DEL)
+                        .arg(key))
+                .replaceWithVoid();
     }
 }
